@@ -4,12 +4,16 @@ from aws_cdk import (
     aws_events as events,
     aws_events_targets as targets,
     aws_iam as iam,
-    core
+    Stack,
+    Duration
 )
+from constructs import Construct
 
-class IngestionLambdaStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
+
+class IngestionLambdaStack(Stack):
+
+    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # The code that defines your stack goes here
@@ -32,7 +36,7 @@ class IngestionLambdaStack(core.Stack):
         lambda_function = _lambda.Function(
             self, 'IngestionLambda',
             runtime=_lambda.Runtime.PYTHON_3_8,
-            code=_lambda.Code.asset('lambda'),
+            code=_lambda.Code.from_asset('lambda'),
             handler='handler.lambda_handler',
             role=role,
             layers=[lambda_layer],
@@ -46,7 +50,7 @@ class IngestionLambdaStack(core.Stack):
 
         rule = events.Rule(
             self, "Rule",
-            schedule=events.Schedule.rate(core.Duration.minutes(5)),
+            schedule=events.Schedule.rate(Duration.minutes(5)),
         )
         rule.add_target(targets.LambdaFunction(lambda_function))
 

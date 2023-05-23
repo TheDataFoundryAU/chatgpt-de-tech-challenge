@@ -1,0 +1,411 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "ingestion-lambda": {
+        "id": "ingestion-lambda",
+        "path": "ingestion-lambda",
+        "children": {
+          "IngestionBucket": {
+            "id": "IngestionBucket",
+            "path": "ingestion-lambda/IngestionBucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ingestion-lambda/IngestionBucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {}
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.80.0"
+            }
+          },
+          "lambda-role": {
+            "id": "lambda-role",
+            "path": "ingestion-lambda/lambda-role",
+            "children": {
+              "Importlambda-role": {
+                "id": "Importlambda-role",
+                "path": "ingestion-lambda/lambda-role/Importlambda-role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ingestion-lambda/lambda-role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.80.0"
+                }
+              },
+              "DefaultPolicy": {
+                "id": "DefaultPolicy",
+                "path": "ingestion-lambda/lambda-role/DefaultPolicy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ingestion-lambda/lambda-role/DefaultPolicy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "s3:Abort*",
+                                "s3:PutObject",
+                                "s3:PutObjectLegalHold",
+                                "s3:PutObjectRetention",
+                                "s3:PutObjectTagging",
+                                "s3:PutObjectVersionTagging"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "IngestionBucket917A3A3A",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/*"
+                                  ]
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policyName": "lambdaroleDefaultPolicyB1623966",
+                        "roles": [
+                          {
+                            "Ref": "lambdaroleDFE21467"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.80.0"
+            }
+          },
+          "LambdaLayer": {
+            "id": "LambdaLayer",
+            "path": "ingestion-lambda/LambdaLayer",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "ingestion-lambda/LambdaLayer/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ingestion-lambda/LambdaLayer/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ingestion-lambda/LambdaLayer/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ingestion-lambda/LambdaLayer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                  "aws:cdk:cloudformation:props": {
+                    "content": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "5d29e3c6e524afb6ccd48978d51abf5efc27f6109e403c078d6905c5db4ccf0a.zip"
+                    },
+                    "compatibleRuntimes": [
+                      "python3.8"
+                    ],
+                    "description": "Layer for pandas and pyarrow libraries"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+              "version": "2.80.0"
+            }
+          },
+          "IngestionLambda": {
+            "id": "IngestionLambda",
+            "path": "ingestion-lambda/IngestionLambda",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "ingestion-lambda/IngestionLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ingestion-lambda/IngestionLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ingestion-lambda/IngestionLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ingestion-lambda/IngestionLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "232e22fc480808935f6fa000e0a600de4fec99e3113cead4ca1dcf0958078b31.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "lambdaroleDFE21467",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "BUCKET_NAME": {
+                          "Ref": "IngestionBucket917A3A3A"
+                        },
+                        "WEATHER_API_URL": "https://api.open-meteo.com/v1/forecast",
+                        "LATITUDE": "<your-latitude>",
+                        "LONGITUDE": "<your-longitude>"
+                      }
+                    },
+                    "handler": "handler.lambda_handler",
+                    "layers": [
+                      {
+                        "Ref": "LambdaLayerCA94B5F7"
+                      }
+                    ],
+                    "runtime": "python3.8"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.80.0"
+            }
+          },
+          "Rule": {
+            "id": "Rule",
+            "path": "ingestion-lambda/Rule",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ingestion-lambda/Rule/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Events::Rule",
+                  "aws:cdk:cloudformation:props": {
+                    "scheduleExpression": "rate(5 minutes)",
+                    "state": "ENABLED",
+                    "targets": [
+                      {
+                        "id": "Target0",
+                        "arn": {
+                          "Fn::GetAtt": [
+                            "IngestionLambdaEF25F265",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_events.CfnRule",
+                  "version": "2.80.0"
+                }
+              },
+              "AllowEventRuleingestionlambdaIngestionLambda3447FF93": {
+                "id": "AllowEventRuleingestionlambdaIngestionLambda3447FF93",
+                "path": "ingestion-lambda/Rule/AllowEventRuleingestionlambdaIngestionLambda3447FF93",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                  "aws:cdk:cloudformation:props": {
+                    "action": "lambda:InvokeFunction",
+                    "functionName": {
+                      "Fn::GetAtt": [
+                        "IngestionLambdaEF25F265",
+                        "Arn"
+                      ]
+                    },
+                    "principal": "events.amazonaws.com",
+                    "sourceArn": {
+                      "Fn::GetAtt": [
+                        "Rule4C995B7F",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_events.Rule",
+              "version": "2.80.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "ingestion-lambda/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "ingestion-lambda/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.80.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "ingestion-lambda/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.31"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "ingestion-lambda/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.80.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "ingestion-lambda/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.80.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.80.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.2.31"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.80.0"
+    }
+  }
+}

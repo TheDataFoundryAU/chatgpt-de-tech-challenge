@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from aws_cdk import core
+import aws_cdk as cdk
 
 from ingestion_lambda.ingestion_lambda_stack import IngestionLambdaStack
 
-app = core.App()
+app = cdk.App()
 IngestionLambdaStack(app, "ingestion-lambda")
 
 app.synth()

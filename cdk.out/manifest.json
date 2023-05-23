@@ -1,0 +1,112 @@
+{
+  "version": "31.0.0",
+  "artifacts": {
+    "ingestion-lambda.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ingestion-lambda.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ingestion-lambda": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ingestion-lambda.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/340ca6cb3db35fe2d018142b9a5d927701fc890bdd82a0a855a738d7b4eae109.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ingestion-lambda.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ingestion-lambda.assets"
+      ],
+      "metadata": {
+        "/ingestion-lambda/IngestionBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IngestionBucket917A3A3A"
+          }
+        ],
+        "/ingestion-lambda/lambda-role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdaroleDFE21467"
+          }
+        ],
+        "/ingestion-lambda/lambda-role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdaroleDefaultPolicyB1623966"
+          }
+        ],
+        "/ingestion-lambda/LambdaLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaLayerCA94B5F7"
+          }
+        ],
+        "/ingestion-lambda/IngestionLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IngestionLambdaEF25F265"
+          }
+        ],
+        "/ingestion-lambda/Rule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Rule4C995B7F"
+          }
+        ],
+        "/ingestion-lambda/Rule/AllowEventRuleingestionlambdaIngestionLambda3447FF93": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RuleAllowEventRuleingestionlambdaIngestionLambda3447FF938C5B94E4"
+          }
+        ],
+        "/ingestion-lambda/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ingestion-lambda/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ingestion-lambda/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ingestion-lambda/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ingestion-lambda"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

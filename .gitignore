@@ -1,1 +1,3 @@
-lambda/*
+lambda/dependancies/*
+cdk.out/asset*
+.venv/*

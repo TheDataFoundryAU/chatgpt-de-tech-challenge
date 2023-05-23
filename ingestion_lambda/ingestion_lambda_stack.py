@@ -10,7 +10,6 @@ from aws_cdk import (
 from constructs import Construct
 
 
-
 class IngestionLambdaStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
@@ -18,9 +17,9 @@ class IngestionLambdaStack(Stack):
 
         # The code that defines your stack goes here
         bucket = s3.Bucket(self, "IngestionBucket")
-        
+
         role = iam.Role(
-            self, 
+            self,
             "lambda-role",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
             managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name('service-role/AWSLambdaBasicExecutionRole')]
@@ -32,7 +31,7 @@ class IngestionLambdaStack(Stack):
             compatible_runtimes=[_lambda.Runtime.PYTHON_3_8],
             description="Layer for pandas and pyarrow libraries"
         )
-        
+
         lambda_function = _lambda.Function(
             self, 'IngestionLambda',
             runtime=_lambda.Runtime.PYTHON_3_8,

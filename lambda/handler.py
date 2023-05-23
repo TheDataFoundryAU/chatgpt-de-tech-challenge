@@ -1,8 +1,6 @@
 import os
 import requests
 import pandas as pd
-import json
-import boto3
 import pyarrow.parquet as pq
 import pyarrow as pa
 from datetime import datetime
@@ -12,6 +10,7 @@ BUCKET_NAME = os.getenv('BUCKET_NAME')
 WEATHER_API_URL = os.getenv('WEATHER_API_URL')
 LATITUDE = os.getenv('LATITUDE')
 LONGITUDE = os.getenv('LONGITUDE')
+
 
 def get_weather_data():
     # Get the url from environment variable and add query parameters

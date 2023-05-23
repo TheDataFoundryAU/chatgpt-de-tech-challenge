@@ -16,6 +16,9 @@ jobs:
       - name: Install Docker
         run: |
           sudo apt-get update
+          sudo apt upgrade
+          sudo apt --fix-broken install
+
           sudo apt-get -y install docker.io
 
       - name: Set up Python 3.8

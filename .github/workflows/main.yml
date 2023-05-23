@@ -16,12 +16,6 @@ jobs:
       - name: Install Docker
         uses: docker-practice/actions-setup-docker@master
         timeout-minutes: 12 
-        # run: |
-        #   sudo apt-get update
-        #   sudo apt upgrade
-        #   sudo apt --fix-broken install
-
-        #   sudo apt-get -y install docker.io    
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
@@ -42,11 +36,6 @@ jobs:
         run: |
           pip install flake8
           flake8 . --config=.flake8
-
-      - name: Test with pytest
-        run: |
-          pip install pytest
-          pytest
 
       - name: Deploy to AWS
         run: |

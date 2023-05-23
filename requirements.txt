@@ -1,5 +1,4 @@
 pandas
 pyarrow
 requests
-aws-cdk.core
-aws-cdk-lib
+aws-cdk-lib=2.80.0

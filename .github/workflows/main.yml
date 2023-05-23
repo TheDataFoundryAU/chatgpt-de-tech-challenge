@@ -29,13 +29,17 @@ jobs:
 
       - name: Build and Test Dependencies
         run: |
-          docker build -t lambda-layer .
-          docker run --rm -v $PWD:/app lambda-layer bash /app/build-dependencies.sh
+          build-dependencies.sh
 
       - name: Lint with flake8
         run: |
           pip install flake8
           flake8 . --config=.flake8
+
+      # - name: Test with pytest
+      #   run: |
+      #     pip install pytest
+      #     pytest
 
       - name: Deploy to AWS
         run: |

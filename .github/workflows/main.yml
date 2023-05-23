@@ -15,11 +15,7 @@ jobs:
 
       - name: Install Docker
         uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-        run: |
-          set -x
-
-          docker version      
+        timeout-minutes: 12 
         # run: |
         #   sudo apt-get update
         #   sudo apt upgrade

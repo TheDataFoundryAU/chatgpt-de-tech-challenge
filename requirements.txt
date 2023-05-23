@@ -2,3 +2,4 @@ pandas
 pyarrow
 requests
 aws-cdk.core
+aws-cdk-lib

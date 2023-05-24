@@ -29,7 +29,8 @@ jobs:
 
       - name: Build and Test Dependencies
         run: |
-          build-dependencies.sh
+          chmod +x build-dependencies.sh
+          ./build-dependencies.sh
 
       - name: Lint with flake8
         run: |

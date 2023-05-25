@@ -1,4 +1,4 @@
 [flake8]
-exclude = .venv,cdk.out
+exclude = .venv,cdk.out,python
 
 ignore = E302,E303,E501,D401,W293,W291

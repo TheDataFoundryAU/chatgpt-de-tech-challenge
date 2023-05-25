@@ -4,9 +4,9 @@ RUN apt-get update -y
 
 WORKDIR /var/task
 
-COPY requirements.txt .
+COPY lambda_requirements.txt .
 
 RUN pip install --upgrade pip &&\
-    pip install -r requirements.txt -t /python/lib/python3.8/site-packages/
+    pip install -r lambda_requirements.txt -t /python/lib/python3.8/site-packages/
 
 CMD ["bash"]

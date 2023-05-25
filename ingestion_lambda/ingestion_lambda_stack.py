@@ -27,7 +27,7 @@ class IngestionLambdaStack(Stack):
 
         lambda_layer = _lambda.LayerVersion(
             self, "LambdaLayer",
-            code=_lambda.Code.from_asset('layer'),
+            code=_lambda.Code.from_asset('python'),
             compatible_runtimes=[_lambda.Runtime.PYTHON_3_8],
             description="Layer for pandas and pyarrow libraries"
         )

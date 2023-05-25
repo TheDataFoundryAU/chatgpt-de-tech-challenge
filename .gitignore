@@ -1,4 +1,14 @@
+# Files
 cdk.out/asset*
 .venv/*
 layer/*
 python/*
+.vscode/*
+.pytest_cachce/*
+.benchmarks/*
+
+# Folders
+.venv
+.vscode
+.pytest_cachce
+.benchmarks

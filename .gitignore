@@ -1,3 +1,4 @@
-lambda/dependencies/*
 cdk.out/asset*
 .venv/*
+layer/*
+python/*

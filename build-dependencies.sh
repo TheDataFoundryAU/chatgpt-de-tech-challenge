@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory where dependencies.zip will be moved
-target_dir="lambda/dependencies"
+target_dir="layer"
 
 # Build Docker image
 docker build -t lambda-layer .
@@ -28,4 +28,4 @@ mv dependencies.zip $target_dir
 
 # Cleanup python directory and dependencies.zip file
 echo "Cleaning up..."
-# rm -rf python
+rm -rf python

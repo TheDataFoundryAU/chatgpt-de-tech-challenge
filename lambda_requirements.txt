@@ -1,5 +1,2 @@
-pandas
 pyarrow
 requests
-boto3
-botocore

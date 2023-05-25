@@ -25,11 +25,19 @@ class IngestionLambdaStack(Stack):
             managed_policies=[iam.ManagedPolicy.from_aws_managed_policy_name('service-role/AWSLambdaBasicExecutionRole')]
         )
 
-        lambda_layer = _lambda.LayerVersion(
-            self, "LambdaLayer",
+        # Pyarrow lambda layer
+        lambda_layer_pyarrow = _lambda.LayerVersion(
+            self, "ExistingLambdaLayer",
             code=_lambda.Code.from_asset('layer'),
             compatible_runtimes=[_lambda.Runtime.PYTHON_3_8],
-            description="Layer for pandas and pyarrow libraries"
+            description="Layer for existing libraries"
+        )
+
+        # New lambda layer for pandas
+        lambda_layer_pandas = _lambda.LayerVersion.from_layer_version_arn(
+            self,
+            "LambdaLayerPandas",
+            "arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:7"
         )
 
         lambda_function = _lambda.Function(
@@ -38,7 +46,7 @@ class IngestionLambdaStack(Stack):
             code=_lambda.Code.from_asset('lambda'),
             handler='handler.lambda_handler',
             role=role,
-            layers=[lambda_layer],
+            layers=[lambda_layer_pandas, lambda_layer_pyarrow],
             environment={
                 'BUCKET_NAME': bucket.bucket_name,
                 'WEATHER_API_URL': 'https://api.open-meteo.com/v1/forecast',

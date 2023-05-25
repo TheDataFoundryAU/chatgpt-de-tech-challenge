@@ -10,7 +10,7 @@ docker build -t lambda-layer .
 docker create -ti --name dummy lambda-layer bash
 
 # Copy python packages from container to host
-docker cp dummy:/python .
+docker cp dummy:/layer .
 
 # Cleanup
 docker rm -f dummy
@@ -23,9 +23,9 @@ if [ ! -d "$target_dir" ]; then
 fi
 
 # Zip python packages and move it to the target_dir
-zip -r dependencies.zip python
-mv dependencies.zip $target_dir
+# zip -r dependencies.zip python
+# mv dependencies.zip $target_dir
 
 # Cleanup python directory and dependencies.zip file
-echo "Cleaning up..."
+# echo "Cleaning up..."
 # rm -rf python

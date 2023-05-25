@@ -1,5 +1,5 @@
 import os
-import requests
+from botocore.vendored import requests
 import pandas as pd
 import pyarrow.parquet as pq
 import pyarrow as pa

@@ -28,4 +28,4 @@ mv dependencies.zip $target_dir
 
 # Cleanup python directory and dependencies.zip file
 echo "Cleaning up..."
-rm -rf python
+# rm -rf python

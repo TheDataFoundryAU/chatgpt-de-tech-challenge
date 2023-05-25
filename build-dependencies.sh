@@ -23,9 +23,9 @@ if [ ! -d "$target_dir" ]; then
 fi
 
 # Zip python packages and move it to the target_dir
-# zip -r dependencies.zip python
-# mv dependencies.zip $target_dir
+zip -r dependencies.zip layer
+mv dependencies.zip $target_dir
 
 # Cleanup python directory and dependencies.zip file
-# echo "Cleaning up..."
-# rm -rf python
+echo "Cleaning up..."
+rm -rf layer/python

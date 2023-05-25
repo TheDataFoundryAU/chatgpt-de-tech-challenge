@@ -44,7 +44,8 @@ class IngestionLambdaStack(Stack):
                 'WEATHER_API_URL': 'https://api.open-meteo.com/v1/forecast',
                 'LATITUDE': '-37.813629',
                 'LONGITUDE': '144.963058'
-            }
+            },
+            memory_size=512  # Set the memory size to 512 MB
         )
 
         rule = events.Rule(

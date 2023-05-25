@@ -42,8 +42,8 @@ class IngestionLambdaStack(Stack):
             environment={
                 'BUCKET_NAME': bucket.bucket_name,
                 'WEATHER_API_URL': 'https://api.open-meteo.com/v1/forecast',
-                'LATITUDE': '<your-latitude>',
-                'LONGITUDE': '<your-longitude>'
+                'LATITUDE': '-37.813629',
+                'LONGITUDE': '144.963058'
             }
         )
 
